@@ -1,0 +1,454 @@
+1. PROJECT ARCHITECTURE
+
+Recommended structure
+
+/app
+  /about/page.tsx
+  /blog/page.tsx
+  /blog/[slug]/page.tsx
+  /contact/page.tsx
+  /projects/page.tsx
+  /services/page.tsx
+  /api/contact/route.ts
+  layout.tsx
+  page.tsx
+  globals.css
+
+/components
+  Navbar.tsx
+  Section.tsx
+  Button.tsx
+  Card.tsx
+  ContactForm.tsx
+  FormField.tsx
+  TerminalTyping.tsx
+  FloatingTechBackground.tsx
+  BlogContent.tsx
+
+/sections
+  head.tsx
+  about-preview.tsx
+  featured-projects.tsx
+  services-preview.tsx
+  contact-cta.tsx
+
+/lib
+  blog.ts
+  contact.ts
+  validation.ts
+  constants.ts
+  utils.ts
+
+/content
+  /blog
+    post-name.md
+
+/public
+  /images
+  /icons
+
+/types
+  blog.ts
+  contact.ts
+
+Separation of concerns
+
+- app: routing, page composition, route handlers
+- components: reusable UI primitives and interactive components
+- sections: page-specific composed blocks
+- lib: business logic, parsing, validation, helpers
+- content/blog: markdown source of truth
+- types: shared TypeScript contracts
+
+Naming conventions
+
+- Components: PascalCase
+- Section files: kebab-case or PascalCase, pick one and keep it consistent
+- Utility files: camelCase or kebab-case, but stay consistent
+- Routes: lowercase folder names
+- Slugs: filename-based, lowercase, hyphen-separated
+- Avoid vague names like helpers.ts; prefer blog.ts, contact.ts, validation.ts
+
+2. DESIGN SYSTEM
+
+Typography
+
+- h1: hero/page headline, text-4xl to text-6xl, tight tracking, high contrast
+- h2: section title, text-3xl to text-4xl
+- h3: card/service/project title, text-xl to text-2xl
+- Body large: text-lg leading-8
+- Body default: text-base leading-8
+- Meta labels: uppercase, small, tracked, muted accent tint
+
+Spacing system
+
+Use a fixed rhythm:
+
+- Section vertical padding: py-16 sm:py-24 lg:py-28
+- Card padding: p-6 sm:p-8
+- Gap between major blocks: gap-8, gap-10, gap-12
+- Max prose width: max-w-3xl
+- Max app width: max-w-6xl
+
+Color system
+
+- Background: deep blue-black, not flat black
+- Surface: slightly lifted dark cards
+- Text primary: near-white
+- Text secondary: zinc-300
+- Text muted: zinc-500
+- Accent: soft blue
+- Accent usage: links, active states, tags, subtle gradients, focus rings
+- Avoid multiple accent colors
+
+Component styling
+
+- Cards: rounded 2xl/3xl, subtle border, soft surface gradient, soft shadow
+- Buttons:
+  - Primary: light gradient, dark text
+  - Secondary: low-contrast bordered dark button
+- Inputs: rounded, dark translucent background, visible focus state
+- Status pills/tags: small, muted, accent border tint
+
+Layout rules
+
+- Outer content width: max-w-6xl mx-auto
+- Text-heavy sections: max-w-3xl
+- Use grid for 2-column layouts on desktop only
+- Mobile-first stacking always
+
+3. UI/UX PRINCIPLES
+
+- Minimal and intentional, not decorative
+- Content first: backend/system credibility should lead visuals
+- Every page should answer: what do you build, how do you think, why trust you
+- Sections should feel like product landing page modules
+- Responsive by simplification, not shrinking everything
+- Accessibility basics:
+  - semantic headings
+  - label every input
+  - visible focus states
+  - sufficient contrast
+  - keyboard navigable nav and forms
+  - meaningful button/link text
+
+4. PAGE-BY-PAGE BREAKDOWN
+
+A. Home Page
+
+Sections
+
+- Hero
+- About Preview
+- Featured Projects
+- Services Preview
+- Contact CTA
+
+Purpose
+
+- Hero: positioning
+- About Preview: explain backend/system focus quickly
+- Projects: proof of capability
+- Services: clarify what can be hired for
+- CTA: convert interest into contact
+
+Show vs hide
+
+- Show concise proof and positioning
+- Hide long detail, full case study depth, full bio
+- Home should sell the system thinker identity, not dump everything
+
+B. About Page
+
+Sections
+
+- What I Do
+- Background
+- Capabilities
+- How I Work
+
+Tone
+
+- Sharp, concrete, systems-oriented
+- No “passionate developer”
+- Emphasize logic-heavy systems, performance, structured thinking
+
+C. Projects Page
+
+Structure
+
+Each project as a mini case study card or block:
+
+- Title
+- Description
+- Problem
+- Approach
+- Deployment plan
+- Tech stack
+- Status
+
+Goal
+
+- Show engineering reasoning, not just “I built X”
+
+D. Services Page
+
+Service categories
+
+- Backend Development
+- Database & Performance Optimization
+- System Design & Problem Solving
+- Deployment & Delivery
+
+Extra sections
+
+- Who this is for
+- How I work
+- CTA
+
+CTA strategy
+
+- Focus on operational pain: fixing, scaling, structuring, building
+
+E. Contact Page
+
+Form structure
+
+- Name
+- Email
+- Mobile Number optional
+- Message
+
+Validation
+
+- Required: name, email, message
+- Optional: mobile number
+- Client validation for UX, server validation for trust
+
+Flow
+
+- Submit to /api/contact
+- Show loading
+- Show success/error feedback
+- Reset form on success
+
+F. Blog Page
+
+System
+
+- Markdown files in content/blog
+- Listing page sorted latest first
+- Dynamic route by slug
+
+Content strategy
+
+- Short practical posts
+- Topics:
+  - backend architecture
+  - SQL/performance
+  - system tradeoffs
+  - debugging real-world issues
+  - deployment/process notes
+
+5. COMPONENT DESIGN
+
+Navbar
+
+- Route navigation
+- Active state logic
+- Mobile menu
+- Shared top-level app shell
+
+Section wrapper
+
+- Shared max width
+- Shared vertical spacing
+- Optional title/subtitle
+- Enforces consistency
+
+Card component
+
+- Shared visual container
+- Variants: default, muted, interactive
+- Used for projects, services, capability groups
+
+Button variants
+
+- Primary
+- Secondary
+- Possibly text-link
+- Centralize hover/focus behavior
+
+Form inputs
+
+- Shared input, textarea, label wrapper
+- Same sizing, border, focus styles
+- Avoid duplicated field styling
+
+Blog renderer
+
+- Render HTML from markdown
+- Apply readable typography classes
+- Keep content styles isolated
+
+6. DATA HANDLING
+
+Blog data
+
+- Read from filesystem in lib/blog.ts
+- Parse with gray-matter
+- Convert markdown with remark
+- Return typed metadata and content
+
+Form submission
+
+- Frontend uses fetch("/api/contact", { method: "POST" })
+- JSON body only
+- Server validates and sends email
+
+Where logic lives
+
+- lib/blog.ts: markdown reading/parsing/sorting
+- lib/validation.ts: shared validators
+- lib/contact.ts: email payload building if API logic grows
+- Keep page files thin; they should compose, not own complex logic
+
+7. BACKEND / API DESIGN
+
+Contact API
+
+POST /api/contact
+
+Input contract
+
+{
+  name: string
+  email: string
+  mobileNumber?: string
+  message: string
+}
+
+Validation rules
+
+- required fields not empty
+- email basic format check
+- trim input
+- optionally limit message length
+
+Error handling
+
+- 400 for invalid input
+- 500 for config/send failures
+- never expose secrets in response
+- log server-side failures
+
+Email flow
+
+- Read RESEND_API_KEY
+- Build email content
+- Include mobile number only if present
+- Send to inbox address
+- Use sender like Portfolio Contact <onboarding@resend.dev> until domain is configured
+
+8. PERFORMANCE & BEST PRACTICES
+
+- Use Server Components by default
+- Use Client Components only for:
+  - navbar mobile toggle
+  - form submission state
+  - typing animation/background randomness
+- Keep static pages static where possible
+- Blog pages should use generateStaticParams
+- Avoid unnecessary state in page components
+- Memoization only if profiling shows a need
+- Optimize images with next/image when real assets are added
+- Keep background effects cheap and low-opacity
+- Avoid large animation surfaces that repaint constantly
+
+9. DEPLOYMENT PLAN (HIGH LEVEL)
+
+Version control
+
+- Git with short-lived branches
+- Clear commit messages
+- Main branch always deployable
+
+Environment variables
+
+- .env.local for local dev
+- production env vars in hosting platform
+- required:
+  - RESEND_API_KEY
+  - optionally CONTACT_FROM_EMAIL
+  - optionally CONTACT_TO_EMAIL
+
+CI/CD concept
+
+- On PR:
+  - install
+  - lint
+  - build
+- On merge to main:
+  - deploy automatically
+
+Platform
+
+- Vercel is best fit for current stack
+- Simple, low-ops, strong Next.js support
+
+Future Docker usage
+
+- Add Dockerfile when moving toward:
+  - self-hosting
+  - parity across dev/staging/prod
+  - custom infra workflows
+- Not necessary for v1, but good future step
+
+10. CODING RULES
+
+- Prefer simple, explicit code
+- Keep page files focused on composition
+- Keep business logic out of JSX
+- Validate at the boundary
+- Use TypeScript types for all data contracts
+- Reuse UI primitives instead of copying class strings everywhere
+- No hidden magic abstractions
+- No premature generic frameworks inside the app
+- One component should have one clear responsibility
+- If a block repeats twice, consider extracting
+- If it repeats once, duplication may still be fine
+- Avoid overengineering admin/CMS layers before needed
+
+11. FUTURE IMPROVEMENTS
+
+- Project detail pages: /projects/[slug]
+- Blog tags and reading time
+- SEO:
+  - per-page metadata
+  - Open Graph
+  - sitemap
+  - RSS feed
+- Analytics:
+  - privacy-friendly analytics
+  - outbound click tracking
+- Contact improvements:
+  - rate limiting
+  - honeypot field
+  - server-side spam filtering
+- CMS upgrade:
+  - move from flat markdown to Contentlayer, MDX, or headless CMS only when editing needs grow
+- Advanced motion:
+  - page transitions
+  - subtle section reveals
+  - keep optional and restrained
+- Testimonials or proof section if real client/work data becomes available
+
+Recommended operating model
+
+For this portfolio, think of the app in 3 layers:
+
+- Presentation layer: components + sections
+- Content/data layer: markdown files + lib/blog.ts
+- Interaction layer: contact form + API route
+
+That keeps the project easy to reason about, fast to ship, and aligned with the kind of backend/system clarity the portfolio is supposed to communicate.
