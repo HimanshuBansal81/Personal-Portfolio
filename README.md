@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Himanshu Bansal — Developer Portfolio
 
-## Getting Started
+A personal developer portfolio built to showcase my work, experience, projects, technical skills, and contact information.
 
-First, run the development server:
+The goal of this portfolio is to present my profile as a full-stack developer with backend-heavy experience, real project work, and production-style deployment exposure.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Live Site
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🌐 Portfolio: https://himanshubansal.dev
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Overview
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This portfolio highlights my professional background, selected projects, technical skills, and ways to connect with me. It is designed to be clean, responsive, recruiter-friendly, and easy to extend with future projects, blogs, and case studies.
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+- Responsive portfolio website
+- Professional landing page
+- About section
+- Project showcase
+- Skills and technology stack section
+- Contact form
+- Blog-ready structure
+- Custom domain setup
+- Deployed on Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Frontend
 
-## Deploy on Vercel
+- React / Next.js
+- TypeScript / JavaScript
+- Tailwind CSS
+- HTML
+- CSS
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Vercel
+- Custom domain: `himanshubansal.dev`
+
+### Integrations
+
+- Contact form integration
+- Email handling using Resend
+
+## Project Structure
+
+```text
+portfolio/
+│
+├── app/
+│   ├── about/
+│   ├── projects/
+│   ├── services/
+│   ├── contact/
+│   └── blog/
+│
+├── components/
+│   ├── ui/
+│   ├── layout/
+│   └── sections/
+│
+├── lib/
+│
+├── public/
+│
+├── styles/
+│
+├── README.md
+├── package.json
+└── next.config.js
