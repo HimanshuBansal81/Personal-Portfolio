@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 const TECH_MARKERS = [
   "Node.js",
   "Docker",
@@ -23,26 +21,25 @@ const TECH_MARKERS = [
   "Services",
 ];
 
-type BackgroundItem = {
-  id: string;
-  label: string;
-  top: string;
-  left: string;
-  delay: string;
-  duration: string;
-  size: string;
-  rotate: string;
-};
-
 const ITEM_COUNT = 18;
 const GRID_COLUMNS = 6;
 const GRID_ROWS = 4;
 
+function createSeededRandom(seed: number) {
+  let value = seed;
+
+  return () => {
+    value = (value * 9301 + 49297) % 233280;
+    return value / 233280;
+  };
+}
+
 function createBackgroundItems() {
+  const random = createSeededRandom(81);
   const cells = Array.from(
     { length: GRID_COLUMNS * GRID_ROWS },
     (_, index) => index,
-  ).sort(() => Math.random() - 0.5);
+  ).sort(() => random() - 0.5);
 
   return Array.from({ length: ITEM_COUNT }, (_, index) => {
     const cell = cells[index % cells.length];
@@ -50,16 +47,16 @@ function createBackgroundItems() {
     const row = Math.floor(cell / GRID_COLUMNS);
     const cellWidth = 100 / GRID_COLUMNS;
     const cellHeight = 100 / GRID_ROWS;
-    const top = row * cellHeight + 6 + Math.random() * (cellHeight - 12);
-    const left = column * cellWidth + 4 + Math.random() * (cellWidth - 8);
-    const duration = 24 + Math.random() * 16;
-    const delay = -(Math.random() * 18);
-    const size = 11 + Math.floor(Math.random() * 4);
-    const rotate = -8 + Math.random() * 16;
+    const top = row * cellHeight + 6 + random() * (cellHeight - 12);
+    const left = column * cellWidth + 4 + random() * (cellWidth - 8);
+    const duration = 24 + random() * 16;
+    const delay = -(random() * 18);
+    const size = 11 + Math.floor(random() * 4);
+    const rotate = -8 + random() * 16;
 
     return {
       id: `tech-bg-${index}`,
-      label: TECH_MARKERS[Math.floor(Math.random() * TECH_MARKERS.length)],
+      label: TECH_MARKERS[Math.floor(random() * TECH_MARKERS.length)],
       top: `${top}%`,
       left: `${left}%`,
       delay: `${delay}s`,
@@ -70,13 +67,9 @@ function createBackgroundItems() {
   });
 }
 
+const backgroundItems = createBackgroundItems();
+
 export default function FloatingTechBackground() {
-  const [items, setItems] = useState<BackgroundItem[]>([]);
-
-  useEffect(() => {
-    setItems(createBackgroundItems());
-  }, []);
-
   return (
     <div
       aria-hidden="true"
@@ -89,7 +82,7 @@ export default function FloatingTechBackground() {
       <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-[#040814] via-[#040814]/90 to-transparent" />
 
       <div className="absolute inset-0">
-        {items.map((item) => (
+        {backgroundItems.map((item) => (
           <div
             key={item.id}
             className="motion-safe:animate-terminal-float absolute rounded-full border border-white/5 bg-white/[0.02] px-3 py-1.5 font-mono text-slate-200/[0.07] grayscale [filter:blur(1px)]"

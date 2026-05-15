@@ -1,5 +1,27 @@
+import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import Section from "@/components/Section";
+
+const title = "Contact";
+const description =
+  "Contact Himanshu Bansal for backend-focused full-stack development, .NET systems, database work, and practical engineering projects.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: {
+    canonical: "/contact",
+  },
+  openGraph: {
+    title: "Contact | Himanshu Bansal",
+    description,
+    url: "/contact",
+  },
+  twitter: {
+    title: "Contact | Himanshu Bansal",
+    description,
+  },
+};
 
 const contactDetails = [
   {
@@ -44,7 +66,11 @@ export default function ContactPage() {
                     href={item.href}
                     className="theme-link mt-3 inline-block text-base leading-7"
                     target={item.href.startsWith("https") ? "_blank" : undefined}
-                    rel={item.href.startsWith("https") ? "noreferrer" : undefined}
+                    rel={
+                      item.href.startsWith("https")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
                   >
                     {item.value}
                   </a>

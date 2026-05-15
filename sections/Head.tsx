@@ -35,8 +35,12 @@ export default function Head() {
               View Projects
             </Link>
 
+            <Link href="/blog" className="theme-button-secondary">
+              Read Blog
+            </Link>
+
             <Link href="/contact" className="theme-button-secondary">
-              Let&apos;s Work Together
+              Contact Me
             </Link>
           </div>
         </div>

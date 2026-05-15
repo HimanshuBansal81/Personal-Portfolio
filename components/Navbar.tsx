@@ -2,7 +2,7 @@
 
 import Container from "@/components/Container";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 
 const navigationLinks = [
@@ -17,10 +17,6 @@ const navigationLinks = [
 export default function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [pathname]);
 
   const isActivePath = (href: string) => {
     if (href === "/") {
@@ -102,6 +98,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
+                onClick={() => setIsMenuOpen(false)}
                 className={`rounded-2xl px-4 py-3 text-sm font-medium transition duration-300 ${
                   isActive
                     ? "bg-gradient-to-r from-sky-100 to-blue-200 text-slate-950 shadow-[0_10px_24px_rgba(42,95,173,0.24)]"

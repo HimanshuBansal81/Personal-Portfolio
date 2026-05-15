@@ -1,6 +1,28 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import Section from "@/components/Section";
 import { getSortedPosts } from "@/lib/blog";
+
+const title = "Blog";
+const description =
+  "A practical engineering learning timeline covering portfolio building, .NET projects, deployment, DSA preparation, and backend system design.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: {
+    canonical: "/blog",
+  },
+  openGraph: {
+    title: "Blog | Himanshu Bansal",
+    description,
+    url: "/blog",
+  },
+  twitter: {
+    title: "Blog | Himanshu Bansal",
+    description,
+  },
+};
 
 export default function BlogPage() {
   const posts = getSortedPosts();
@@ -15,19 +37,19 @@ export default function BlogPage() {
               Notes on systems, backend architecture, and practical engineering.
             </h1>
             <p className="mt-6 max-w-3xl text-base leading-8 text-zinc-300 sm:text-lg sm:leading-8">
-              Writing focused on building reliable software, working through
-              complexity, and improving systems that need to perform under
-              real-world conditions.
+              A timeline of what I am building and learning across portfolio
+              work, full-stack deployment, backend system design, interview
+              preparation, and modern .NET engineering.
             </p>
           </div>
 
           <aside className="theme-card rounded-3xl p-6">
-            <p className="theme-section-label">Publishing style</p>
+            <p className="theme-section-label">Learning themes</p>
             <ul className="mt-6 space-y-4">
               {[
-                "Short, practical backend notes",
-                "Real-world system design thinking",
-                "Performance and maintainability",
+                "Proof-of-work project building",
+                "Backend and full-stack delivery",
+                "Career growth through structured learning",
               ].map((item) => (
                 <li
                   key={item}
@@ -41,31 +63,61 @@ export default function BlogPage() {
         </div>
       </Section>
 
-      <Section title="All Posts" subtitle="Latest first" className="border-t border-white/10">
+      <Section
+        title="Engineering Learning Timeline"
+        subtitle="Latest first"
+        className="border-t border-white/10"
+      >
         <div className="space-y-6">
           {posts.map((post) => (
             <article
               key={post.slug}
               className="theme-card rounded-[2rem] p-6 transition duration-300 hover:border-sky-200/20 hover:shadow-[0_22px_60px_rgba(5,12,25,0.32)] sm:p-8"
             >
-              <div className="flex flex-wrap items-center gap-3">
-                <p className="theme-section-label text-xs">{post.formattedDate}</p>
-                <span className="text-xs uppercase tracking-[0.18em] text-zinc-500">
-                  {post.readingTime}
-                </span>
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <p className="theme-section-label text-xs">
+                      {post.displayDate}
+                    </p>
+                    <span className="rounded-full border border-sky-200/10 bg-sky-300/5 px-3 py-1 text-xs font-medium text-sky-100/75">
+                      {post.category}
+                    </span>
+                    <span className="text-xs uppercase tracking-[0.18em] text-zinc-500">
+                      {post.readTime}
+                    </span>
+                  </div>
+
+                  <h3 className="mt-5 text-2xl font-semibold tracking-[-0.04em] text-white">
+                    {post.title}
+                  </h3>
+                  <p className="mt-4 max-w-3xl text-base leading-8 text-zinc-300">
+                    {post.summary}
+                  </p>
+                </div>
+
+                {post.slug && (
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="theme-button-secondary w-full shrink-0 sm:w-auto"
+                  >
+                    Read Article
+                  </Link>
+                )}
               </div>
-              <h3 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-white">
-                {post.title}
-              </h3>
-              <p className="mt-4 max-w-3xl text-base leading-8 text-zinc-300">
-                {post.description}
-              </p>
-              <Link
-                href={`/blog/${post.slug}`}
-                className="theme-button-secondary mt-8 w-full sm:w-auto"
-              >
-                Read article
-              </Link>
+
+              <div className="mt-8 flex flex-wrap gap-2">
+                {post.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-xs font-medium text-zinc-300/80"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </article>
           ))}
         </div>
