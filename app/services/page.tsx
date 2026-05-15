@@ -1,5 +1,27 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import Section from "@/components/Section";
+
+const title = "Services";
+const description =
+  "Backend development, database performance, system design, and deployment support for logic-heavy applications.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: {
+    canonical: "/services",
+  },
+  openGraph: {
+    title: "Services | Himanshu Bansal",
+    description,
+    url: "/services",
+  },
+  twitter: {
+    title: "Services | Himanshu Bansal",
+    description,
+  },
+};
 
 const services = [
   {

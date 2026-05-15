@@ -1,112 +1,66 @@
-import fs from "node:fs";
-import path from "node:path";
-import matter from "gray-matter";
 import { remark } from "remark";
 import html from "remark-html";
-
-const postsDirectory = path.join(process.cwd(), "content/blog");
+import { blogPosts } from "@/lib/blog-posts";
 
 export type BlogPostMeta = {
   slug: string;
   title: string;
   date: string;
   formattedDate: string;
+  displayDate: string;
+  category: string;
+  readTime: string;
+  summary: string;
   description: string;
   readingTime: string;
-};
-
-type BlogFrontmatter = {
-  title?: string;
-  date?: string;
-  description?: string;
+  tags: string[];
 };
 
 export type BlogPost = BlogPostMeta & {
   contentHtml: string;
 };
 
-function formatDate(date: string) {
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "long",
-  }).format(new Date(date));
-}
-
-function getReadingTime(content: string) {
-  const wordCount = content.trim().split(/\s+/).filter(Boolean).length;
-  const minutes = Math.max(1, Math.ceil(wordCount / 200));
-
-  return `${minutes} min read`;
-}
-
-function ensurePostsDirectory() {
-  if (!fs.existsSync(postsDirectory)) {
-    fs.mkdirSync(postsDirectory, { recursive: true });
-  }
-}
-
-function parsePostFile(fileName: string): BlogPostMeta {
-  const slug = fileName.replace(/\.md$/, "");
-  const fullPath = path.join(postsDirectory, fileName);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
-  const frontmatter = data as BlogFrontmatter;
-  const date = frontmatter.date ?? "";
-
+function toPostMeta(post: (typeof blogPosts)[number]): BlogPostMeta {
   return {
-    slug,
-    title: frontmatter.title ?? slug,
-    date,
-    formattedDate: date ? formatDate(date) : "",
-    description: frontmatter.description ?? "",
-    readingTime: getReadingTime(content),
+    slug: post.slug,
+    title: post.title,
+    date: post.date,
+    formattedDate: post.displayDate,
+    displayDate: post.displayDate,
+    category: post.category,
+    readTime: post.readTime,
+    summary: post.summary,
+    description: post.summary,
+    readingTime: post.readTime,
+    tags: post.tags,
   };
 }
 
 export function getSortedPosts(): BlogPostMeta[] {
-  ensurePostsDirectory();
-
-  return fs
-    .readdirSync(postsDirectory)
-    .filter((fileName) => fileName.endsWith(".md"))
-    .map(parsePostFile)
+  return blogPosts
+    .map(toPostMeta)
     .sort((firstPost, secondPost) =>
       firstPost.date < secondPost.date ? 1 : -1,
     );
 }
 
 export function getPostSlugs() {
-  ensurePostsDirectory();
-
-  return fs
-    .readdirSync(postsDirectory)
-    .filter((fileName) => fileName.endsWith(".md"))
-    .map((fileName) => ({
-      slug: fileName.replace(/\.md$/, ""),
-    }));
+  return blogPosts.map((post) => ({
+    slug: post.slug,
+  }));
 }
 
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  ensurePostsDirectory();
+  const post = blogPosts.find((item) => item.slug === slug);
 
-  const fullPath = path.join(postsDirectory, `${slug}.md`);
-
-  if (!fs.existsSync(fullPath)) {
+  if (!post) {
     return null;
   }
 
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
-  const frontmatter = data as BlogFrontmatter;
-  const processedContent = await remark().use(html).process(content);
+  const processedContent = await remark().use(html).process(post.content);
 
   return {
-    slug,
-    title: frontmatter.title ?? slug,
-    date: frontmatter.date ?? "",
-    formattedDate: frontmatter.date ? formatDate(frontmatter.date) : "",
-    description: frontmatter.description ?? "",
-    readingTime: getReadingTime(content),
+    ...toPostMeta(post),
     contentHtml: processedContent.toString(),
   };
 }

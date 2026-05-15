@@ -1,4 +1,26 @@
+import type { Metadata } from "next";
 import Section from "@/components/Section";
+
+const title = "About";
+const description =
+  "About Himanshu Bansal, a backend-focused full-stack developer working with .NET, SQL, system design, and practical engineering workflows.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About | Himanshu Bansal",
+    description,
+    url: "/about",
+  },
+  twitter: {
+    title: "About | Himanshu Bansal",
+    description,
+  },
+};
 
 const capabilityGroups = [
   {
