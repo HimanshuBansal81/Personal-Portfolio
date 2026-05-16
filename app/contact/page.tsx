@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/ContactForm";
 import Section from "@/components/Section";
+import { contactEmail } from "@/lib/contact";
 
 const title = "Contact";
 const description =
@@ -26,8 +27,8 @@ export const metadata: Metadata = {
 const contactDetails = [
   {
     label: "Email",
-    value: "himanshub49@gmail.com",
-    href: "mailto:himanshub49@gmail.com",
+    value: contactEmail,
+    href: `mailto:${contactEmail}`,
   },
   {
     label: "LinkedIn",

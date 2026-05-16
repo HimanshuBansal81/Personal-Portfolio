@@ -52,9 +52,9 @@ const services = [
     title: "Deployment & Delivery",
     items: [
       "Version control using Git",
-      "CI/CD pipeline setup",
-      "Docker-based deployment",
-      "Managing application environments",
+      "Understanding CI/CD basics and deployment workflows",
+      "Working with Docker-based local and deployment setups",
+      "Managing environment configuration for deployed applications",
     ],
   },
 ];

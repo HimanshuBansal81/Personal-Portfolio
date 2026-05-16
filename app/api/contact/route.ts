@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { contactEmail } from "@/lib/contact";
 
 type ContactPayload = {
   name?: string;
@@ -9,7 +10,6 @@ type ContactPayload = {
 };
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const CONTACT_TO_EMAIL = "himanshub49@gmail.com";
 const CONTACT_FROM_EMAIL = "Portfolio Contact <onboarding@resend.dev>";
 
 function isNonEmptyString(value: unknown) {
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
 
     const { error } = await resend.emails.send({
       from: CONTACT_FROM_EMAIL,
-      to: [CONTACT_TO_EMAIL],
+      to: [contactEmail],
       replyTo: email,
       subject: `Portfolio inquiry from ${name}`,
       html,
