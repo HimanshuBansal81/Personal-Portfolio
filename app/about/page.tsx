@@ -67,10 +67,10 @@ const capabilityGroups = [
     title: "Development Workflow & Deployment",
     items: [
       "Using Git with structured branching and team collaboration",
-      "Setting up CI/CD pipelines for build and deployment automation",
+      "Understanding CI/CD basics and deployment workflows",
       "Containerizing applications with Docker for consistent environments",
-      "Understanding deployment workflows and environment management",
-      "Deploying and maintaining applications in production-like setups",
+      "Working with Docker-based local and deployment setups",
+      "Managing environment configuration for deployed applications",
     ],
   },
 ];

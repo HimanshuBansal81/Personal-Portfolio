@@ -153,7 +153,7 @@ Another mistake was underestimating CORS and environment configuration. The code
 
 ## What I would improve next
 
-I would add Redis caching for high-traffic short-code lookups, improve analytics with charts and filters, and add more automated tests around alias uniqueness, expiry, ownership, and redirects.
+I would improve the Redis caching strategy for high-traffic short-code lookups, improve analytics with charts and filters, and add more automated tests around alias uniqueness, expiry, ownership, and redirects.
 
 I would also improve CI/CD so build and deployment checks are more repeatable. The project is live, but there is still room to make it more production-minded.
 

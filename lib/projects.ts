@@ -49,7 +49,7 @@ export const projects: Project[] = [
     type: "Backend / Logistics SaaS",
     category: "Backend",
     summary:
-      "A cloud-native multi-carrier freight quote system designed to calculate shipment rates using zones, carrier pricing rules, chargeable weight, surcharges, and AI-assisted explanations.",
+      "A containerized logistics-focused freight quote system designed for cloud deployment.",
     overview: [
       "FreightRate AI is an in-progress backend-focused logistics SaaS project for calculating and comparing freight quotes across multiple carriers. The project is designed around practical logistics rules: zones, carrier pricing, chargeable weight, minimum charges, surcharges, and taxes.",
       "The goal is not only to return a number. A useful freight quote system should explain why a rate was selected and how the final amount was built. That is where the AI explanation layer fits: the deterministic backend calculates the quote, and the AI layer helps turn the breakdown into clear language.",
@@ -137,7 +137,7 @@ export const projects: Project[] = [
     overview: [
       "The URL Shortener Platform is a completed full-stack web application for creating and managing shortened links. It includes user authentication, custom aliases, expiry dates, QR generation, click analytics, and a user dashboard.",
       "I built it as a practical project because a URL shortener looks simple but quickly becomes a real application once ownership, redirects, analytics, and deployment are included.",
-      "The project connects a .NET 8 backend, PostgreSQL database, and React frontend deployed across Render and Vercel, with real production concerns such as CORS, environment variables, and API configuration.",
+      "The project connects a .NET 8 backend, PostgreSQL database, Redis cache, and React frontend deployed across Render and Vercel, with real production concerns such as CORS, environment variables, and API configuration.",
     ],
     problem:
       "A useful URL shortener has to do more than store a long URL and return a short one. It must generate unique short codes, support custom aliases, enforce authenticated ownership, handle redirects quickly, check expiry rules, track analytics, and stay reliable after deployment. Small mistakes in these flows can lead to broken redirects, duplicate aliases, or users seeing data they do not own.",
@@ -158,7 +158,7 @@ export const projects: Project[] = [
       "Requests go to the ASP.NET Core Web API, where validation and authentication are applied.",
       "The service layer handles short-code generation, custom alias checks, expiry rules, and user ownership.",
       "PostgreSQL stores users, URLs, aliases, expiry metadata, and click events.",
-      "Public redirect requests resolve the short code, check expiry, record click analytics, and return the destination URL.",
+      "Public redirect requests use Redis cache-aside lookup for short-code resolution, fall back to PostgreSQL when needed, check expiry, record click analytics, and return the destination URL.",
       "Serilog captures structured logs, rate limiting protects API endpoints, and Docker keeps backend setup reproducible.",
       "The backend is deployed on Render and the frontend is deployed on Vercel, which required careful CORS and environment variable setup.",
     ],
@@ -177,7 +177,7 @@ export const projects: Project[] = [
     ],
     nextImprovements: [
       "Add more analytics views such as referrers, devices, and time-based charts.",
-      "Introduce caching for high-traffic redirect lookups.",
+      "Improve Redis caching strategy for high-traffic redirect lookups.",
       "Add more automated tests around alias uniqueness, expiry, and ownership rules.",
       "Improve error states and empty states in the frontend dashboard.",
     ],
@@ -186,6 +186,7 @@ export const projects: Project[] = [
       "ASP.NET Core Web API",
       "EF Core",
       "PostgreSQL",
+      "Redis",
       "JWT",
       "Rate Limiting",
       "Docker",
@@ -203,7 +204,7 @@ export const projects: Project[] = [
       },
       {
         title: "Data",
-        items: ["PostgreSQL"],
+        items: ["PostgreSQL", "Redis"],
       },
       {
         title: "Frontend",
@@ -270,7 +271,7 @@ export const projects: Project[] = [
       "Enterprise systems reward careful reading of existing behavior before changing code.",
       "Stored procedures and backend APIs need clear contracts when business rules are distributed across layers.",
       "Professional case studies should explain impact and complexity without revealing confidential company, client, schema, or internal system details.",
-      "Enterprise logistics work builds discipline around reading existing behavior before changing code.",
+      "Legacy enterprise systems require careful change management because business logic is often spread across UI, services, stored procedures, and configuration.",
     ],
     nextImprovements: [
       "Continue improving performance in data-heavy workflows where safe and measurable.",
@@ -330,7 +331,7 @@ export const projects: Project[] = [
     features: [
       "Homepage with hero, about, skills, featured projects, services, and contact sections.",
       "Projects page with category filters and detailed project cards.",
-      "Blog pages powered by Markdown content.",
+      "Blog and project pages powered by shared structured TypeScript content data.",
       "Services and contact pages for professional positioning.",
       "Contact form integration using Resend.",
       "Project detail pages for recruiter-friendly case studies.",
@@ -370,7 +371,7 @@ export const projects: Project[] = [
       "React",
       "TypeScript",
       "Tailwind CSS",
-      "Markdown",
+      "Structured TypeScript Content",
       "Resend",
       "Vercel",
     ],
@@ -381,7 +382,7 @@ export const projects: Project[] = [
       },
       {
         title: "Content & Forms",
-        items: ["Markdown", "Resend"],
+        items: ["Structured TypeScript Content", "Resend"],
       },
       {
         title: "Deployment",
